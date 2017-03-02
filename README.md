@@ -4,9 +4,13 @@ PCA9534 GPIO expander library for Particle devices with Particle like API calls.
 
 ## Usage
 
+![Hardware connection](images/hardware_connection.png "Hardware connection setup")
+
 Connect an LED to PCA9534 pin 0 chip, add the PCA9534 library to your project and follow this simple example:
 
 ```Arduino
+#include "PCA9534.h"
+
 #define GPIO_PIN_LED 0
 
 PCA9534 gpio;
