@@ -43,7 +43,7 @@ void setup() {
 }
 ```
 
-### `begin(i2caddr)`
+### `begin([i2caddr])`
 Initializes the device and performs initial I2C setup. This method should be called before any others are used.
 
 #### Parameters:
