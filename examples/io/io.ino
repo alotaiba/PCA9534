@@ -12,6 +12,12 @@
 #define GPIO_PIN_BUTTON        1  // Button connected to GPIO-1 as input
 
 PCA9534 gpio;
+// Last time the output pin was toggled
+unsigned long lastDebounceTime = 0;
+// Debounce time; increase if the output flickers
+unsigned long debounceDelay = 25;
+// Default button status for debouncing
+uint8_t lastButtonStatus = HIGH;
 
 // Helps ensure the application loop is not interrupted by the system
 // background processing and network management.
@@ -28,9 +34,19 @@ void setup() {
 
 void loop() {
   uint8_t buttonStatus = gpio.digitalRead(GPIO_PIN_BUTTON);
-  if (buttonStatus == LOW) {
-    gpio.digitalWrite(GPIO_PIN_LED, LOW); // LED On
-  } else {
-    gpio.digitalWrite(GPIO_PIN_LED, HIGH); // LED Off
+
+  if (buttonStatus != lastButtonStatus) {
+    // reset the debouncing timer
+    lastDebounceTime = millis();
   }
+
+  if ((millis() - lastDebounceTime) > debounceDelay) {
+    if (buttonStatus == LOW) {
+      gpio.digitalWrite(GPIO_PIN_LED, LOW); // LED On
+    } else {
+      gpio.digitalWrite(GPIO_PIN_LED, HIGH); // LED Off
+    }
+  }
+
+  lastButtonStatus = buttonStatus;
 }

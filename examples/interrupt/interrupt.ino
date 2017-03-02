@@ -15,9 +15,15 @@
 
 PCA9534 gpio;
 volatile uint8_t ioState = LOW;
+// Last time the output pin was toggled
+unsigned long lastDebounceTime = 0;
+// Debounce time; increase if the output flickers
+unsigned long debounceDelay = 25;
 
 void io() {
   ioState = HIGH;
+  // Capture all the flickering
+  lastDebounceTime = millis();
 }
 
 // Helps ensure the application loop is not interrupted by the system
@@ -25,6 +31,7 @@ void io() {
 SYSTEM_THREAD(ENABLED);
 
 void setup() {
+  Serial.begin(115200);
   gpio.begin();
 
   gpio.pinMode(GPIO_PIN_LED, OUTPUT);
@@ -37,12 +44,14 @@ void setup() {
 
 void loop() {
   if (ioState == HIGH) {
-    uint8_t buttonStatus = gpio.digitalRead(GPIO_PIN_BUTTON);
-    if (buttonStatus == LOW) {
-      gpio.digitalWrite(GPIO_PIN_LED, LOW); // LED On
-    } else {
-      gpio.digitalWrite(GPIO_PIN_LED, HIGH); // LED Off
+    if (millis() - lastDebounceTime > debounceDelay) {
+      uint8_t buttonStatus = gpio.digitalRead(GPIO_PIN_BUTTON);
+      if (buttonStatus == LOW) {
+        gpio.digitalWrite(GPIO_PIN_LED, LOW); // LED On
+      } else {
+        gpio.digitalWrite(GPIO_PIN_LED, HIGH); // LED Off
+      }
+      ioState = LOW; // Reset the state for another interrupt
     }
-    ioState = LOW; // Reset the state for another interrupt
   }
 }
