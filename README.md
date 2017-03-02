@@ -43,10 +43,13 @@ void setup() {
 }
 ```
 
-### `begin`
+### `begin(i2caddr)`
 Initializes the device and performs initial I2C setup. This method should be called before any others are used.
 
-@param `i2caddr`: sets the slave address of the PCA9534, defaults to 0x20.
+#### Parameters:
+| Name | Type | Description |
+|------|------|-------------|
+| `i2caddr` | `uint8_t` | Sets the slave address of the PCA9534, defaults to 0x20. |
 
 ```
 void setup() {
@@ -54,12 +57,14 @@ void setup() {
 }
 ```
 
-### `pinMode`
+### `pinMode(pin, mode)`
 Configures the specified pin to behave either as an input, inverted input, or output.
 
-@param `pin`: is number of the pin whose mode you wish to set.
-
-@param `mode`: `INPUT`, `INPUT_INVERTED`, or `OUTPUT`.
+#### Parameters:
+| Name | Type | Description |
+|------|------|-------------|
+| `pin` | `uint8_t` | Pin number whose mode you wish to set. |
+| `mode` | `uint8_t` | Pin mode one of: `INPUT`, `INPUT_INVERTED`, or `OUTPUT`. |
 
 ```
 void setup() {
@@ -68,12 +73,14 @@ void setup() {
 }
 ```
 
-### `digitalWrite`
+### `digitalWrite(pin, value)`
 Writes a `HIGH` or a `LOW` value to a digital pin.
 
-@param `pin`: is number of the pin whose value you wish to set.
-
-@param `value`: `HIGH`, or `LOW`.
+#### Parameters:
+| Name | Type | Description |
+|------|------|-------------|
+| `pin` | `uint8_t` | Pin number whose value you wish to set. |
+| `value` | `uint8_t` | Pin value one of: `HIGH`, or `LOW`. |
 
 ```
 void loop() {
@@ -84,12 +91,18 @@ void loop() {
 }
 ```
 
-### `digitalRead`
+### `digitalRead(pin)`
 Reads the value from a specified digital pin, either `HIGH` or `LOW`.
 
-@param `pin`: is number of the pin whose value you wish to get.
+*Note: when using `INPUT_INVERTED` on `pinMode()`, you will get the inverted status.*
 
-@return the status of the pin either `HIGH` or `LOW`. *Note: when using `INPUT_INVERTED` on `pinMode()`, you will get the inverted status.*
+#### Parameters:
+| Name | Type | Description |
+|------|------|-------------|
+| `pin` | `uint8_t` | Pin number whose value you wish to get. |
+
+#### Returns:
+`uint8_t` - The status of the pin either HIGH or LOW.
 
 ```
 void loop() {

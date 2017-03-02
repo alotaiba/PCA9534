@@ -33,7 +33,8 @@ public:
    * Initializes the device and performs initial I2C setup.
    * This method should be called before any others are used.
    *
-   * @param i2caddr sets the slave address of the PCA9534, defaults to 0x20.
+   * @param {uint8_t} i2caddr - Sets the slave address of the PCA9534,
+   * defaults to 0x20.
    */
   void begin(uint8_t i2caddr = PCA9534_I2C_ADDRESS);
 
@@ -41,25 +42,26 @@ public:
    * Configures the specified pin to behave either as an input, inverted input,
    * or output.
    *
-   * @param pin is number of the pin whose mode you wish to set.
-   * @param mode INPUT, INPUT_INVERTED, or OUTPUT.
+   * @param {uint8_t} pin - Pin number whose mode you wish to set.
+   * @param {uint8_t} mode - Pin mode one of: INPUT, INPUT_INVERTED, or OUTPUT.
    */
   void pinMode(uint8_t pin, uint8_t mode);
 
   /**
    * Writes a HIGH or a LOW value to a digital pin.
    *
-   * @param pin is number of the pin whose value you wish to set.
-   * @param value HIGH, or LOW.
+   * @param {uint8_t} pin - Pin number whose value you wish to set.
+   * @param {uint8_t} value - Pin value one of: HIGH, or LOW.
    */
   void digitalWrite(uint8_t pin, uint8_t value);
 
   /**
    * Reads the value from a specified digital pin, either HIGH or LOW.
+   * **Note: When using INPUT_INVERTED on pinMode(), you will get the inverted
+   * status.**
    *
-   * @param pin is number of the pin whose value you wish to get.
-   * @return the status of the pin either HIGH or LOW. Note: when using
-   * INPUT_INVERTED on pinMode(), you will get the inverted status.
+   * @param {uint8_t} pin - Pin number whose value you wish to get.
+   * @returns {uint8_t} The status of the pin either HIGH or LOW.
    */
   uint8_t digitalRead(uint8_t pin);
 
